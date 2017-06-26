@@ -89,8 +89,9 @@ wagc=0.5	agc window in seconds (use if agc=1 or gagc=1)
 sugain agc=1 wagc=12.0 < shots0001.su | suximage perc=99 title='gained' [X window 출력]
 # '|'라는 pipeline 명령어는 linux 명령어를 참고하면 된다.
 ```
-[original](./images/_03_01_002.bmp)
-[gained](./images/_03_01_001.bmp)
+[original](./images/_03_01_002.bmp?raw=true)
+[gained](./images/_03_01_001.bmp?raw=true)
+
 두번째 목적을 위한 `sugain`의 사용법은 아래와 같다.
 ```
 sugain tpow=0.5 < shots0001.su > shots0001.tpow0.5.su [*.su 파일로 저장]
