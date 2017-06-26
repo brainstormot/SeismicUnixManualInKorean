@@ -90,8 +90,10 @@ sugain agc=1 wagc=12.0 < shots0001.su | suximage perc=99 title='gained' [X windo
 # '|'라는 pipeline 명령어는 linux 명령어를 참고하면 된다.
 ```
 
-[original](assets/SeismicUnixManual-33ec4.png)
-[gained](assets/SeismicUnixManual-60620.png)
+![original](assets/SeismicUnixManual-33ec4.png)
+![gained](assets/SeismicUnixManual-60620.png)
+
+위 그림을 보면 `original`에 비해 `gained`의 후기 신호가 좀 더 강조됨을 확인할 수 있다.
 
 두번째 목적을 위한 `sugain`의 사용법은 아래와 같다.
 ```
