@@ -1,3 +1,3 @@
-# My Awesome Book
+# Seismic Unix Manual in Korean
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+Seismic unix 한글 사용자를 위해 만들었습니다.
