@@ -2,6 +2,7 @@ Seismic Unix 명령어 설명
 =======================
 ## 0. 표기
 `[ ]`은 코드의 결과를 설명할때 쓰인다.
+`{ }`은 option과 argument를 설명할때 쓰인다. 실제 명령어를 사용할 때는 제거할 것
 `#`은 주석이다.
 ***
 ## 1. 파일 변환하기
@@ -9,12 +10,15 @@ Seismic Unix 명령어 설명
 ### 1.1. segyread
 
 `segyread`는 `*.segy` 파일을 `*.su` 파일로 변환하는 기능을 가진다.
+
+아래는 `input.segy`파일을 little endian 형식의 `output.su` 파일로 변환하는 예제이다.
 ```
-segyread tape=input.segy endian=0 > ouput.su
+segyread tape=input.segy endian=0 | segyclean > ouput.su
 [output.su, binary, header  생성]
 ```
 `endian=0`은 little endian을 의미한다.
 `binary`와 `header` 파일은 제거해도 되는 것으로 보인다. (불확실)
+`segyclean` 을 같이 수행해야 d1,d2,f1,f2 값에 dummy 값이 들어가지 않는다.
 
 ***
 ## 2. Geometry 읽기, 쓰기, 수정하기
@@ -61,6 +65,8 @@ Midpoint coordinate limits:
 
 순번대로 읽을 수도 있고, 특정한 index를 읽어올 수도 있다.
 
+
+
 ---
 ## 3. 전처리 (Preprocessing)
 
@@ -100,3 +106,32 @@ sugain agc=1 wagc=12.0 < shots0001.su | suximage perc=99 title='gained' [X windo
 sugain tpow=0.5 < shots0001.su > shots0001.tpow0.5.su [*.su 파일로 저장]
 ```
 물론 첫번재와 두번째 방법을 수행하기위해 꼭 위와 같이 해야하는 것은 아니다. 다양한 weighting이 가능하다.
+
+### 3.2. suwind
+
+`suwind`는 `*.su` 파일의 일부분을 key에 따라 slicing하는 명령어이다.
+
+```
+suwind {key} {min} {max} < {input.su} > {ouput.su} [파일로 출력]
+suwind {key} {min} {max} < {input.su} | suximage perc=99 [pipeline으로 넘기기]
+```
+
+다음은 key값에 `fldr`을 주고 2225번째 shot gather 만을 뽑아 새로운 `*.su`파일을 만들어내는 예제이다. (sorting은 보장하지 않는다)
+
+```
+suwind key=fldr min=2225 max=2225 < 06_Deconvolution.su > 06_Deconvolution.shot2225.su
+```
+### 3.3. suresamp
+
+`suresamp`는 `*.su` 파일의 일부분을 resample하는 명령어이다.
+
+#### 3.3.1 후기신호 잘라내기 (3.4.1과 연결되는 내용)
+
+swell noise를 제거하기위해 필터를 적용한 결과 아래와 같이 artifact들이 생성되었다. 이를 sumute를 활용하여 제거해보자. 후반부의 신호를 4.5초까지 잘라내도록 하겠다.
+```
+suresamp nt=2250 <03_Swell_Noise.su > 03_Swell_Noise.cuttail.su
+```
+![bad](assets/SeismicUnixManual-7d181.png)
+*후기 신호 자르기전*
+![cutted](assets/SeismicUnixManual-27be8.png)
+*후기 신호 자른 후*
