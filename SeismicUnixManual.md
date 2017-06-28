@@ -129,7 +129,7 @@ suwind key=fldr min=2225 max=2225 < 06_Deconvolution.su > 06_Deconvolution.shot2
 
 swell noise를 제거하기위해 필터를 적용한 결과 아래와 같이 artifact들이 생성되었다. 이를 sumute를 활용하여 제거해보자. 후반부의 신호를 4.5초까지 잘라내도록 하겠다.
 ```
-suresamp nt=2250 <03_Swell_Noise.su > 03_Swell_Noise.cuttail.su
+suresamp nt=2250 < input.su > output.su
 ```
 ![bad](assets/SeismicUnixManual-7d181.png)
 *후기 신호 자르기전*
